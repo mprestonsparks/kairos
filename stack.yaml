@@ -1,0 +1,9 @@
+resolver: lts-21.25  # Latest LTS resolver as of now
+packages:
+- .
+
+extra-deps: []
+
+flags: {}
+
+extra-package-dbs: []

@@ -1,0 +1,52 @@
+cabal-version:      3.0
+name:               kairos
+version:            0.1.0.0
+synopsis:          AI-first implementation of Homotopy Type Theory
+description:       Kairos is an AI-first implementation of Homotopy Type Theory (HoTT) using RedPRL/RedTT as its foundation and Anthropic's Model Context Protocol (MCP) for AI integration.
+license:           MIT
+author:            Kairos Team
+maintainer:        team@kairos.dev
+category:          Math
+build-type:        Simple
+extra-doc-files:   README.md
+
+common common-options
+    default-language: GHC2021
+    ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates
+                -Wincomplete-uni-patterns -Wmissing-export-lists
+                -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints
+    default-extensions:
+        DataKinds
+        DeriveGeneric
+        FlexibleContexts
+        GADTs
+        LambdaCase
+        OverloadedStrings
+        TypeFamilies
+
+library
+    import:           common-options
+    exposed-modules:
+        Kairos.Core.Types
+        Kairos.Core.Pattern
+        Kairos.MCP.Protocol
+        Kairos.RedPRL.Interface
+    hs-source-dirs:   src
+    build-depends:
+        base >= 4.14 && < 5,
+        aeson >= 2.0,
+        containers >= 0.6,
+        mtl >= 2.2,
+        text >= 1.2,
+        transformers >= 0.5
+
+test-suite kairos-test
+    import:           common-options
+    type:             exitcode-stdio-1.0
+    hs-source-dirs:   test
+    main-is:          Spec.hs
+    build-depends:
+        base,
+        kairos,
+        QuickCheck >= 2.14,
+        hspec >= 2.7

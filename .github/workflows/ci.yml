@@ -1,0 +1,79 @@
+name: Kairos CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    name: Build and Test
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        ghc: ['9.4.7']
+        cabal: ['3.10.1.0']
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Setup Haskell
+      uses: haskell/actions/setup@v2
+      with:
+        ghc-version: ${{ matrix.ghc }}
+        cabal-version: ${{ matrix.cabal }}
+
+    - name: Cache
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.cabal/packages
+          ~/.cabal/store
+          dist-newstyle
+        key: ${{ runner.os }}-${{ matrix.ghc }}-${{ hashFiles('**/*.cabal', '**/cabal.project', '**/cabal.project.freeze') }}
+        restore-keys: |
+          ${{ runner.os }}-${{ matrix.ghc }}-
+
+    - name: Install dependencies
+      run: |
+        cabal update
+        cabal build --only-dependencies --enable-tests --enable-benchmarks
+        
+    - name: Build
+      run: cabal build --enable-tests --enable-benchmarks all
+
+    - name: Run tests
+      run: cabal test all
+
+    - name: Check formatting
+      uses: haskell/actions/hlint-setup@v2
+      with:
+        version: '3.5'
+
+    - name: Run HLint
+      run: hlint .
+
+  docs:
+    name: Documentation
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Setup Haskell
+      uses: haskell/actions/setup@v2
+      with:
+        ghc-version: '9.4.7'
+        cabal-version: '3.10.1.0'
+
+    - name: Install Haddock
+      run: cabal install haddock
+
+    - name: Generate documentation
+      run: cabal haddock --enable-documentation
+
+    - name: Upload documentation
+      uses: actions/upload-artifact@v3
+      with:
+        name: docs
+        path: dist-newstyle/build/**/doc/html/

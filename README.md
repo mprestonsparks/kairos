@@ -130,6 +130,94 @@ Required features:
 3. Add proof management
 4. Build verification system
 
+## Development Tools and Planning
+
+### Project Management
+
+#### GitHub Project Board
+Our development is tracked using a [GitHub Project Board](https://github.com/users/mprestonsparks/projects/5) that provides:
+- Sprint planning and tracking
+- Task prioritization
+- Progress visualization
+- Team coordination
+
+#### Issue Management
+Issues are organized using a comprehensive labeling system:
+- **Type Labels**: 
+  - `epic`: High-level tracking issues
+  - `type-feature`: New feature implementation
+  - `type-bug`: Bug fixes
+  - `type-docs`: Documentation updates
+  - `type-test`: Test implementation
+
+- **Priority Labels**:
+  - `priority-high`: Immediate attention required
+  - `priority-medium`: Standard priority
+  - `priority-low`: Can be addressed later
+
+- **Phase Labels**:
+  - `phase-1`: Core Infrastructure
+  - `phase-2`: Pattern System
+  - `phase-3`: AI Integration
+  - `phase-4`: Proof System
+
+- **Status Labels**:
+  - `status-blocked`: Blocked by dependencies
+
+### Development Resources
+
+#### Documentation
+- [Development Guide](docs/development-guide.md): Comprehensive guide for developers
+- [Contributing Guidelines](CONTRIBUTING.md): How to contribute to the project
+- [Pull Request Template](.github/pull_request_template.md): Template for creating PRs
+
+#### CI/CD Pipeline
+Our [GitHub Actions workflow](.github/workflows/ci.yml) provides:
+- Automated builds
+- Test execution
+- Code quality checks (HLint)
+- Documentation generation (Haddock)
+
+### Getting Started with Development
+
+1. **Project Setup**
+   ```bash
+   git clone https://github.com/mprestonsparks/kairos.git
+   cd kairos
+   cabal update
+   cabal build
+   ```
+
+2. **Development Workflow**
+   - Create a new branch for your feature/fix
+   - Implement changes following [CONTRIBUTING.md](CONTRIBUTING.md)
+   - Submit PR using the [template](.github/pull_request_template.md)
+   - Await review and CI checks
+
+3. **Issue Creation**
+   - Use appropriate labels
+   - Reference related issues/PRs
+   - Follow issue templates
+   - Include acceptance criteria
+
+4. **Code Review Process**
+   - Ensure CI passes
+   - Follow framework guidelines
+   - Update documentation
+   - Address review comments
+
+### Project Structure
+```
+kairos/
+├── .github/                # GitHub configuration
+│   ├── workflows/         # CI/CD workflows
+│   └── ISSUE_TEMPLATE/    # Issue templates
+├── docs/                  # Project documentation
+├── src/                   # Source code
+├── test/                  # Test suite
+└── scripts/              # Development scripts
+```
+
 ## Testing Requirements
 
 ### Unit Testing
